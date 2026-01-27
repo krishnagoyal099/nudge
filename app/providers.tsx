@@ -10,13 +10,14 @@ import { SolflareWalletAdapter } from "@solana/wallet-adapter-solflare";
 import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
 import "@solana/wallet-adapter-react-ui/styles.css";
 
+import { UserProvider } from "@/contexts/user-context";
+
 export function Providers({ children }: { children: React.ReactNode }) {
     const network = WalletAdapterNetwork.Devnet;
-    const endpoint = useMemo(() => "https://api.devnet.solana.com", []);
+    const endpoint = useMemo(() => process.env.NEXT_PUBLIC_RPC_URL || "https://api.devnet.solana.com", []);
 
     const wallets = useMemo(
         () => [
-            // --- UPDATED WALLET INSTANTIATION ---
             new PhantomWalletAdapter(),
             new SolflareWalletAdapter()
         ],
@@ -26,7 +27,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
     return (
         <ConnectionProvider endpoint={endpoint}>
             <WalletProvider wallets={wallets} autoConnect>
-                <WalletModalProvider>{children}</WalletModalProvider>
+                <WalletModalProvider>
+                    <UserProvider>{children}</UserProvider>
+                </WalletModalProvider>
             </WalletProvider>
         </ConnectionProvider>
     );

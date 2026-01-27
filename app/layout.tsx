@@ -1,14 +1,21 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { Providers } from "./providers";
 
-const inter = Inter({ subsets: ["latin"] });
+const csDespina = localFont({
+  src: "./fonts/CSDespina-Regular.otf",
+  variable: "--font-display",
+});
+
+const popfine = localFont({
+  src: "./fonts/POPFINERegular.otf",
+  variable: "--font-body",
+});
 
 export const metadata: Metadata = {
-  title: "Nudge | Private Solana Blinks",
-  description: "Receive SOL privately without revealing your main address.",
-  // Open Graph Image for social sharing
+  title: "Nudge | High-Fidelity Private Payments",
+  description: "Receive payments privately with style. The most premium privacy experience on Solana.",
   openGraph: {
     images: ["/nudge-logo.png"],
   },
@@ -21,7 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} min-h-screen bg-zinc-950 text-zinc-100 selection:bg-emerald-500/30`}>
+      <body className={`${csDespina.variable} ${popfine.variable} min-h-screen bg-background text-foreground antialiased overflow-x-hidden font-body`}>
         <Providers>{children}</Providers>
       </body>
     </html>
