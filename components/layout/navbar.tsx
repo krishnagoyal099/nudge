@@ -13,7 +13,7 @@ export function Navbar() {
             className="object-cover"
           />
         </div>
-        <span className="text-2xl tracking-[0.1em] uppercase text-white/80 hidden sm:block font-display">
+        <span className="text-3xl tracking-[0.1em] text-white/80 sm:block font-display">
           NUDGE
         </span>
       </div>
@@ -28,7 +28,7 @@ export function Navbar() {
         </Link>
         <Link
           href="/dashboard"
-          className="text-white/80 text-md md:text-lg font-medium tracking-[0.2em] hover:text-neon-pink transition-colors uppercase font-display"
+          className="text-white/80 text-md md:text-lg font-medium tracking-[0.2em] hover:text-yellow-400 transition-colors uppercase font-display"
         >
           APP
         </Link>

@@ -128,10 +128,15 @@ export default function PoolPage() {
         setPoolError(null);
         try {
             const keypair = await ensureStealthKey();
-            const { transaction, stealthSigner } = await buildUnshieldTx(keypair, publicKey, publicKey);
+            const { transaction, stealthSigner, noirProof } = await buildUnshieldTx(keypair, publicKey, publicKey);
             
             console.log("Stealth signer:", keypair.publicKey.toBase58());
             console.log("Wallet:", publicKey.toBase58());
+            console.log("Noir ownership proof:", {
+                stealthPublicKey: noirProof.stealthPublicKey,
+                timestamp: noirProof.timestamp,
+                proofHash: Array.from(noirProof.proof.slice(0, 8)).map(b => b.toString(16).padStart(2, '0')).join('')
+            });
             
             // Pre-sign with stealth authority, then wallet signs as fee payer
             transaction.sign([stealthSigner]);

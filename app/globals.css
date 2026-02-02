@@ -8,8 +8,19 @@
   --neon-orange: #F57D1F;
   --neon-yellow: #EBF400;
 
+  /* Hero Text Scaling for consistent wallpaper alignment */
+  --hero-text-size: 25vw;
+  --hero-line-height: 1.1;
+  --hero-text-height: calc(var(--hero-text-size) * var(--hero-line-height));
+  
   /* Fallback to display font for hero headings if not explicitly set */
   --font-heading-main: var(--font-display);
+}
+
+@media (min-width: 768px) {
+  :root {
+    --hero-text-size: 35vw;
+  }
 }
 
 body {
