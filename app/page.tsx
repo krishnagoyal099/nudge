@@ -1,15 +1,19 @@
 
 import { Navbar } from "@/components/layout/navbar";
 import { Hero } from "@/components/landing/hero";
+import { Features } from "@/components/landing/features";
+import { HowItWorks } from "@/components/landing/how-it-works";
+import { CTA } from "@/components/landing/cta";
 
 export default function LandingPage() {
   return (
     <main className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <Navbar />
       <Hero />
-
-      {/* Features Section - Placeholder for now */}
-
+      <Features />
+      <HowItWorks />
+      <CTA />
     </main>
   );
 }
+

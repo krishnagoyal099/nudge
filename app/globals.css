@@ -3,17 +3,50 @@
 :root {
   --background: 18, 18, 18;
   --foreground: 255, 255, 255;
-  
-  --neon-pink: 247, 39, 152;
-  --neon-orange: 245, 125, 31;
-  --neon-yellow: 235, 244, 0;
+
+  --neon-pink: #F72798;
+  --neon-orange: #F57D1F;
+  --neon-yellow: #EBF400;
+
+  /* Fallback to display font for hero headings if not explicitly set */
+  --font-heading-main: var(--font-display);
 }
 
 body {
   color: rgb(var(--foreground));
   background: rgb(var(--background));
   font-family: var(--font-body);
-  overflow-x: hidden; /* For sticky scroll/parallax safety */
+  overflow-x: hidden;
+  /* For sticky scroll/parallax safety */
+}
+
+/* Font utility fallbacks to prevent global font leakage */
+.font-display {
+  font-family: var(--font-display), sans-serif;
+}
+
+.font-body {
+  font-family: var(--font-body), sans-serif;
+}
+
+.font-script {
+  font-family: var(--font-script), cursive;
+}
+
+.font-despina {
+  font-family: var(--font-despina), var(--font-display), sans-serif;
+}
+
+.font-hero {
+  font-family: var(--font-anton), sans-serif;
+}
+
+.font-heading-main {
+  font-family: var(--font-heading-main), var(--font-display), sans-serif;
+}
+
+.font-mono {
+  font-family: var(--font-mono), monospace;
 }
 
 /* Glassmorphism Utilities */

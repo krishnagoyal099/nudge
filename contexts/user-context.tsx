@@ -45,36 +45,63 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
             setIsLoading(true);
             const address = publicKey.toBase58();
 
-            // Check if user exists in Supabase
-            const { data, error } = await supabase
-                .from("users")
-                .select("*")
-                .eq("wallet_address", address)
-                .single();
-
-            if (data) {
-                setUser(data);
-            } else {
-                // Create new user if not found (auto-signup)
-                // In a real app we might want a signature proof here
-                const { data: newUser, error: createError } = await supabase
+            try {
+                // Check if user exists in Supabase
+                const { data, error } = await supabase
                     .from("users")
-                    .insert([{ wallet_address: address, tier: "free" }])
-                    .select()
+                    .select("*")
+                    .eq("wallet_address", address)
                     .single();
 
-                if (newUser) {
-                    setUser(newUser);
-                } else {
-                    // Fallback for demo/no-db mode
+                if (error && error.code !== "PGRST116") {
+                    // PGRST116 = "Row not found" - this is expected for new users
+                    console.error("Error fetching user:", error);
+                    // Fallback to demo mode on DB errors
                     setUser({
                         id: "demo",
                         wallet_address: address,
                         tier: "free"
                     });
+                    setIsLoading(false);
+                    return;
                 }
+
+                if (data) {
+                    setUser(data);
+                } else {
+                    // Create new user if not found (auto-signup)
+                    const { data: newUser, error: createError } = await supabase
+                        .from("users")
+                        .insert([{ wallet_address: address, tier: "free" }])
+                        .select()
+                        .single();
+
+                    if (createError) {
+                        console.error("Error creating user:", createError);
+                    }
+
+                    if (newUser) {
+                        setUser(newUser);
+                    } else {
+                        // Fallback for demo/no-db mode
+                        setUser({
+                            id: "demo",
+                            wallet_address: address,
+                            tier: "free"
+                        });
+                    }
+                }
+            } catch (err) {
+                console.error("Unexpected error in user sync:", err);
+                // Fallback to demo mode
+                setUser({
+                    id: "demo",
+                    wallet_address: address,
+                    tier: "free"
+                });
+            } finally {
+                setIsLoading(false);
             }
-            setIsLoading(false);
         }
 
         syncUser();

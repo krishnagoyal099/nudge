@@ -25,15 +25,26 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
     try {
         const body = await request.json();
-        const { userId, steathPublicKey, label } = body;
+        const { userId, stealthPublicKey, label } = body;
+
+        // Validate inputs
+        if (!userId || !stealthPublicKey || !label) {
+            return NextResponse.json(
+                { error: "Missing required fields: userId, stealthPublicKey, label" },
+                { status: 400 }
+            );
+        }
+
+        const host = process.env.NEXT_PUBLIC_HOST_URL || "http://localhost:3000";
+        const blinkUrl = `${host}/api/actions/nudge?id=${encodeURIComponent(stealthPublicKey)}`;
 
         const { data, error } = await supabase
             .from("blink_links")
             .insert([{
                 user_id: userId,
-                stealth_public_key: steathPublicKey,
+                stealth_public_key: stealthPublicKey,
                 label,
-                blink_url: `https://...` // Generate real URL logic here
+                blink_url: blinkUrl
             }])
             .select()
             .single();
@@ -42,6 +53,7 @@ export async function POST(request: Request) {
 
         return NextResponse.json(data);
     } catch (error) {
+        console.error("Failed to create link:", error);
         return NextResponse.json({ error: "Failed to create link" }, { status: 500 });
     }
 }

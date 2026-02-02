@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import tailwindcssAnimate from "tailwindcss-animate";
 
 const config: Config = {
   content: [
@@ -12,13 +13,13 @@ const config: Config = {
         background: "#111111",
         foreground: "#ffffff",
         neon: {
-          pink: "rgb(247, 39, 152)",
-          orange: "rgb(245, 125, 31)",
-          yellow: "rgb(235, 244, 0)",
+          pink: "#F72798",
+          orange: "#F57D1F",
+          yellow: "#EBF400",
         },
       },
       fontFamily: {
-        display: ["var(--font-display)", "serif"],
+        display: ["var(--font-display)", "sans-serif"],
         body: ["var(--font-body)", "sans-serif"],
         script: ["var(--font-script)", "cursive"],
         hero: ["var(--font-anton)", "sans-serif"],
@@ -45,6 +46,6 @@ const config: Config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [tailwindcssAnimate],
 };
 export default config;

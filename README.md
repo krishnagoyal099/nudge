@@ -1,12 +1,27 @@
 # 🛡️ Nudge - Private Payments on Solana
 
-> **ZK-Shielded Payments via Shareable Blink URLs**
+> **ZK-Shielded Payments via Shareable Blink URLs — Powered by Noir & Light Protocol**
 
-Nudge is a privacy-first payment wrapper that turns any Solana address into a secure, shareable "Blink" URL. When someone pays via your link, funds are routed through a **real ZK-compressed pool** using [Light Protocol](https://lightprotocol.com/) and deposited into a fresh, unlinked stealth address. Your main wallet identity is **never revealed on-chain**.
+Nudge is a privacy-first payment platform that turns any Solana wallet into a secure, shareable "Blink" URL. When someone pays via your link, funds are routed through **dual ZK systems** — Noir proofs for identity verification and Light Protocol for on-chain compression — depositing into a fresh, unlinked stealth address. Your main wallet identity is **never revealed on-chain**.
 
 ![Solana](https://img.shields.io/badge/Solana-Devnet-9945FF?style=for-the-badge&logo=solana)
-![Light Protocol](https://img.shields.io/badge/Light_Protocol-ZK_Compression-10B981?style=for-the-badge)
-![Next.js](https://img.shields.io/badge/Next.js-15-black?style=for-the-badge&logo=next.js)
+![Noir](https://img.shields.io/badge/Noir-ZK_Proofs-FF6B35?style=for-the-badge)
+![Light Protocol](https://img.shields.io/badge/Light_Protocol-Compression-10B981?style=for-the-badge)
+![Next.js](https://img.shields.io/badge/Next.js-16-black?style=for-the-badge&logo=next.js)
+![Helius](https://img.shields.io/badge/Helius-RPC-E84D3D?style=for-the-badge)
+
+---
+
+## 🏆 Hackathon Tracks
+
+This project is built for multiple hackathon tracks:
+
+| Track | Implementation |
+|-------|----------------|
+| **Noir ZK Proofs** | Client-side proof generation for stealth identity verification |
+| **Helius DevTools** | RPC infrastructure with ZK compression prover service |
+| **Solana Actions/Blinks** | Shareable payment links with embedded transactions |
+| **Privacy Infrastructure** | End-to-end private payments on Solana |
 
 ---
 
@@ -14,11 +29,13 @@ Nudge is a privacy-first payment wrapper that turns any Solana address into a se
 
 | Feature | Description |
 |---------|-------------|
-| **Real ZK Proofs** | Uses Light Protocol's actual prover service - not simulated |
+| **Dual ZK System** | Noir for identity proofs + Light Protocol for on-chain compression |
 | **Stealth Addresses** | Deterministic keypair derived from wallet signature |
-| **Blink Compatible** | Works on Twitter/X, Discord, and dial.to |
+| **Custom Blink Slugs** | Nameable links like `dial.to/...nudge?id=coffee-tips` |
+| **Premium Dashboard** | Awwwards-quality UI with real-time analytics |
+| **Link Management** | Create, edit, delete up to 15 links (unlimited for Pro) |
 | **Non-Custodial** | You always control your funds |
-| **Compliance Ready** | Export viewing key for tax/audit purposes |
+| **Compliance Ready** | Export viewing keys for tax/audit purposes |
 
 ---
 
@@ -27,40 +44,45 @@ Nudge is a privacy-first payment wrapper that turns any Solana address into a se
 ### The Privacy Flow
 
 ```
-┌─────────────────────────────────────────────────────────────────────┐
-│                        NUDGE PRIVACY FLOW                           │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                     │
-│  1. RECIPIENT                    2. SENDER                          │
-│  ┌──────────────┐                ┌──────────────┐                  │
-│  │ Main Wallet  │                │ Main Wallet  │                  │
-│  │ (Hidden)     │                │ (Visible)    │                  │
-│  └──────┬───────┘                └──────┬───────┘                  │
-│         │                               │                          │
-│         │ Signs Message                 │ Clicks Blink URL         │
-│         ▼                               ▼                          │
-│  ┌──────────────┐                ┌──────────────┐                  │
-│  │ Stealth Key  │◄───────────────│ ZK Compress  │                  │
-│  │ Derived      │   Funds go to  │ Transaction  │                  │
-│  └──────┬───────┘   stealth addr └──────────────┘                  │
-│         │                                                          │
-│         │ Withdraw (Decompress)                                    │
-│         ▼                                                          │
-│  ┌──────────────┐                                                  │
-│  │ Main Wallet  │ ← Funds appear without link to sender            │
-│  │ (Receives)   │                                                  │
-│  └──────────────┘                                                  │
-│                                                                     │
-└─────────────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                           NUDGE PRIVACY FLOW                                │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  1. RECIPIENT                         2. SENDER                             │
+│  ┌──────────────┐                     ┌──────────────┐                     │
+│  │ Main Wallet  │                     │ Main Wallet  │                     │
+│  │ (Hidden)     │                     │ (Visible)    │                     │
+│  └──────┬───────┘                     └──────┬───────┘                     │
+│         │                                    │                             │
+│         │ Signs Message                      │ Clicks Blink URL            │
+│         ▼                                    ▼                             │
+│  ┌──────────────┐                     ┌──────────────┐                     │
+│  │ Noir ZK      │                     │ Light        │                     │
+│  │ Proof Gen    │                     │ Protocol     │                     │
+│  └──────┬───────┘                     │ Compress     │                     │
+│         │                             └──────┬───────┘                     │
+│         ▼                                    │                             │
+│  ┌──────────────┐◄───────────────────────────┘                             │
+│  │ Stealth Key  │   Funds shielded to stealth addr                         │
+│  │ Derived      │                                                          │
+│  └──────┬───────┘                                                          │
+│         │                                                                  │
+│         │ Withdraw (Decompress + ZK Proof)                                 │
+│         ▼                                                                  │
+│  ┌──────────────┐                                                          │
+│  │ Main Wallet  │ ← Funds appear without link to sender                    │
+│  │ (Receives)   │                                                          │
+│  └──────────────┘                                                          │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
 ```
 
-### Technical Steps
+### Technical Implementation
 
-1. **Generate Stealth Identity**: Sign a message → derive deterministic keypair
-2. **Create Blink URL**: Shareable link containing stealth public key
-3. **Sender Pays**: Clicks link → wallet builds ZK compress transaction
-4. **Funds Shielded**: SOL is compressed into Light Protocol Merkle tree
-5. **Recipient Withdraws**: Real ZK proof generated → funds decompressed to main wallet
+1. **Noir ZK Proof**: When you unlock your identity, a Noir circuit generates a proof of ownership without revealing your wallet
+2. **Stealth Key Derivation**: TweetNaCl derives a keypair from your signature — deterministic & reproducible
+3. **Light Protocol Compression**: Incoming SOL is compressed into the Merkle tree, assigned to your stealth address
+4. **Helius RPC**: Powers the prover service for real ZK validity proofs
 
 ---
 
@@ -71,6 +93,7 @@ Nudge is a privacy-first payment wrapper that turns any Solana address into a se
 - Node.js 18+
 - A Solana wallet (Phantom, Solflare, or Backpack)
 - Helius API key (free tier works)
+- Supabase project (for database)
 
 ### Installation
 
@@ -96,9 +119,20 @@ NEXT_PUBLIC_RPC_URL=https://devnet.helius-rpc.com/?api-key=YOUR_HELIUS_API_KEY
 
 # Your deployed URL (for Blink metadata)
 NEXT_PUBLIC_HOST_URL=http://localhost:3000
+NEXT_PUBLIC_BASE_URL=http://localhost:3000
+
+# Supabase Configuration
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 ```
 
-> **Note**: You need a Helius API key because it includes the Light Protocol prover service. Get one free at [helius.dev](https://helius.dev).
+### Database Setup
+
+Run the schema in your Supabase SQL editor:
+
+```bash
+# Located at /supabase/schema.sql
+```
 
 ### Run Development Server
 
@@ -110,58 +144,50 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ---
 
-## 🧪 Testing on Devnet
-
-### 1. Get Devnet SOL
-
-```bash
-solana airdrop 2 YOUR_WALLET_ADDRESS --url devnet
-```
-
-Or use [solfaucet.com](https://solfaucet.com).
-
-### 2. Create Your Stealth Identity
-
-1. Connect your wallet
-2. Click "Create Identity"
-3. Sign the message in your wallet
-4. Copy your Blink URL
-
-### 3. Test with dial.to
-
-Once deployed, test your Blink:
-
-```
-https://dial.to/?action=solana-action:https://your-app.vercel.app/api/actions/nudge?id=YOUR_STEALTH_ID
-```
-
-### 4. Receive & Withdraw
-
-1. Send SOL via the Blink (from a different wallet)
-2. Refresh balance in the app
-3. Click "Unshield & Withdraw"
-4. Funds appear in your main wallet!
-
----
-
 ## 🏗️ Project Structure
 
 ```
 nudge/
 ├── app/
 │   ├── api/
-│   │   └── actions/
-│   │       └── nudge/
-│   │           └── route.ts     # Solana Actions API (Blink handler)
-│   ├── page.tsx                 # Main UI
-│   ├── layout.tsx               # Root layout with providers
-│   └── providers.tsx            # Wallet adapter setup
+│   │   ├── actions/nudge/    # Solana Blinks API
+│   │   └── links/            # Link management API
+│   ├── dashboard/            # Protected dashboard routes
+│   │   ├── page.tsx          # Main dashboard with stats
+│   │   ├── links/            # Link management
+│   │   ├── pricing/          # Subscription plans
+│   │   └── settings/         # User settings
+│   └── page.tsx              # Landing page
+├── components/
+│   ├── dashboard/
+│   │   ├── link-manager.tsx  # CRUD for blinks
+│   │   └── stats-overview.tsx # Analytics charts
+│   ├── landing/
+│   │   ├── hero.tsx          # Premium hero section
+│   │   ├── features.tsx      # Feature showcase
+│   │   ├── how-it-works.tsx  # Process explanation
+│   │   └── cta.tsx           # Call to action
+│   ├── layout/
+│   │   ├── navbar.tsx        # Navigation
+│   │   └── sidebar.tsx       # Dashboard sidebar
+│   └── ui/                   # Reusable components
+│       ├── button.tsx
+│       ├── card.tsx
+│       ├── dialog.tsx
+│       ├── input.tsx
+│       ├── progress.tsx
+│       ├── tabs.tsx
+│       └── tooltip.tsx
 ├── lib/
-│   ├── light.ts                 # Light Protocol integration (ZK proofs)
-│   └── stealth.ts               # Stealth key derivation
-├── public/
-│   └── nudge-logo.png           # Your logo for Blinks
-└── .env.local                   # Environment variables
+│   ├── light.ts              # Light Protocol integration
+│   ├── noir.ts               # Noir ZK proof generation
+│   ├── stealth.ts            # Stealth key derivation
+│   ├── supabase.ts           # Database client
+│   └── utils.ts              # Utilities
+├── contexts/
+│   └── user-context.tsx      # User state management
+└── supabase/
+    └── schema.sql            # Database schema
 ```
 
 ---
@@ -170,64 +196,67 @@ nudge/
 
 | Technology | Purpose |
 |------------|---------|
-| **Light Protocol** | ZK Compression - real zero-knowledge proofs |
-| **Solana Actions** | Blink URL standard for shareable transactions |
-| **Next.js 15** | React framework with API routes |
-| **Wallet Adapter** | Multi-wallet support (Phantom, Solflare, etc.) |
+| **Noir** | ZK circuit language for identity proofs |
+| **Light Protocol** | On-chain ZK compression |
+| **Helius** | RPC + Prover service infrastructure |
+| **Solana Actions** | Blink URL standard |
+| **Next.js 16** | React framework with App Router |
+| **Supabase** | PostgreSQL database + Auth |
+| **Recharts** | Analytics visualization |
+| **Framer Motion** | Premium animations |
+| **Radix UI** | Accessible components |
 
 ---
 
-## 📊 Real ZK Proofs - Not Simulated
+## 📊 Dashboard Features
 
-This project uses **real** Light Protocol ZK compression:
+### Link Management
+- **Create** up to 15 blinks (Free) / 50 (Pro) / 200 (Enterprise)
+- **Custom Slugs** — name your links (e.g., `/coffee-tips`)
+- **Edit** labels and slugs anytime
+- **Delete** with failsafe (warns about pending balance)
+
+### Analytics
+- **Total Received** — sum of all payments
+- **Click Tracking** — see link engagement
+- **Conversion Rate** — clicks to payments ratio
+- **Per-Link Stats** — detailed breakdown
+- **Visual Charts** — beautiful data visualization
+
+### Compliance
+- **Export Reports** — JSON with stealth key ownership proof
+- **Viewing Keys** — prove ownership for tax purposes
+- **Privacy Preserved** — main wallet never exposed
+
+---
+
+## 🔐 Noir ZK Integration
 
 ```typescript
-// lib/light.ts - Real ZK proof generation
+// lib/noir.ts - Privacy proof generation
 
-// 1. Fetch compressed accounts from Merkle tree
-const accounts = await connection.getCompressedAccountsByOwner(stealthKey);
+import { generateOwnershipProof, generateTransferProof } from "./noir";
 
-// 2. Request REAL validity proof from prover service
-const { compressedProof, rootIndices } = await connection.getValidityProof(
-    accountHashes,
-    [] // No new addresses
+// Generate proof of stealth address ownership
+const proof = await generateOwnershipProof(
+    stealthSecretKey,
+    stealthPublicKey,
+    "Nudge Identity Verification"
 );
 
-// 3. Build decompress instruction with proof
-const ix = await LightSystemProgram.decompress({
-    payer: signer.publicKey,
-    inputCompressedAccounts: accounts,
-    toAddress: recipient,
-    lamports: totalLamports,
-    recentInputStateRootIndices: rootIndices,
-    recentValidityProof: compressedProof,  // ← Real ZK proof!
-});
+// Generate privacy proof for transfers
+const transferProof = await generateTransferProof(
+    senderSecret,
+    recipientStealth,
+    amountLamports,
+    nonce
+);
 ```
 
-The prover service is hosted by Helius and generates cryptographic proofs that verify:
-- The compressed accounts exist in the Merkle tree
-- The accounts are owned by the stealth key
-- The state roots are valid and recent
-
----
-
-## 🎖️ Compliance & Viewing Keys
-
-For tax/auditing purposes, Nudge allows you to export a compliance report:
-
-```json
-{
-  "app": "Nudge | Privacy Payments on Solana",
-  "version": "1.0.0",
-  "network": "devnet",
-  "stealth_public_key": "ABC123...",
-  "current_balance_sol": 1.5,
-  "timestamp": "2024-01-27T12:00:00Z",
-  "disclaimer": "This export proves ownership of the stealth address for tax/compliance purposes."
-}
-```
-
-This proves you own the stealth address without revealing your main wallet.
+The Noir integration provides:
+- **Identity Proofs**: Prove you own a stealth address without revealing your main wallet
+- **Transfer Proofs**: Verify payment validity without exposing sender information
+- **Nullifiers**: Prevent double-spending with deterministic nullifier generation
 
 ---
 
@@ -236,20 +265,18 @@ This proves you own the stealth address without revealing your main wallet.
 ### Vercel (Recommended)
 
 ```bash
-# Install Vercel CLI
 npm i -g vercel
-
-# Deploy
 vercel
-
-# Set environment variables in Vercel dashboard
 ```
 
-### Environment Variables for Production
+### Environment Variables
 
 ```env
 NEXT_PUBLIC_RPC_URL=https://devnet.helius-rpc.com/?api-key=YOUR_KEY
 NEXT_PUBLIC_HOST_URL=https://your-app.vercel.app
+NEXT_PUBLIC_BASE_URL=https://your-app.vercel.app
+NEXT_PUBLIC_SUPABASE_URL=https://xxx.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJxxx...
 ```
 
 ---
@@ -258,7 +285,7 @@ NEXT_PUBLIC_HOST_URL=https://your-app.vercel.app
 
 | Limitation | Details |
 |------------|---------|
-| **Proof Generation Time** | ZK proofs can take 5-30 seconds |
+| **Proof Time** | ZK proofs can take 5-30 seconds |
 | **Devnet Only** | Currently configured for Solana Devnet |
 | **SOL Only** | SPL token support coming soon |
 | **Blink Wallets** | Requires Phantom, Solflare, or Backpack |
@@ -267,11 +294,15 @@ NEXT_PUBLIC_HOST_URL=https://your-app.vercel.app
 
 ## 🛣️ Roadmap
 
+- [x] Noir ZK proof integration
+- [x] Premium dashboard UI
+- [x] Link management with custom slugs
+- [x] Analytics visualization
 - [ ] SPL Token support (USDC, etc.)
 - [ ] Mainnet deployment
-- [ ] Multi-recipient splits
-- [ ] Recurring private payments
 - [ ] Mobile app
+- [ ] Recurring payments
+- [ ] Multi-recipient splits
 
 ---
 
@@ -283,6 +314,7 @@ MIT License - feel free to fork and build!
 
 ## 🙏 Acknowledgments
 
+- [Noir Language](https://noir-lang.org/) - ZK circuit DSL
 - [Light Protocol](https://lightprotocol.com/) - ZK Compression infrastructure
 - [Helius](https://helius.dev/) - RPC + Prover service
 - [Solana Actions](https://docs.dialect.to/) - Blink standard
@@ -292,5 +324,7 @@ MIT License - feel free to fork and build!
 <div align="center">
 
 **Built with 🛡️ for privacy on Solana**
+
+*Noir ZK • Light Protocol • Helius • Solana Actions*
 
 </div>

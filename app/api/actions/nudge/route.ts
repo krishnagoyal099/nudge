@@ -11,7 +11,7 @@ import { buildShieldedTransferTx, NudgeError } from "@/lib/light";
 
 /**
  * 1. GET HANDLER
- * Returns the "Metadata" to render the UI cards on X/Twitter/Dial.to
+ * Returns the metadata to render the action UI
  */
 export async function GET(req: NextRequest) {
     try {
