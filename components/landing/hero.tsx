@@ -18,7 +18,7 @@ export function Hero() {
         </span>
 
         {/* Accent Text: 'payments' (Bottom Right) */}
-        <span className="absolute bottom-[8%] right-[4%] font-despina text-[clamp(2.5rem,6vw,6.5rem)] text-white z-30 -rotate-6 pointer-events-none mix-blend-overlay opacity-80 select-none">
+        <span className="absolute bottom-[22%] md:bottom-[8%] right-[4%] font-despina text-[clamp(2.5rem,6vw,6.5rem)] text-white z-30 -rotate-6 pointer-events-none mix-blend-overlay opacity-80 select-none">
           payments
         </span>
 
@@ -28,10 +28,10 @@ export function Hero() {
             <div key={index} className="relative group">
               {/* Pink Offset Layer */}
               <span
-                className="absolute inset-0 z-20 text-[25vw] md:text-[35vw] leading-[1.1] font-display text-transparent pointer-events-none select-none"
+                className="absolute inset-0 z-20 text-[38vw] md:text-[35vw] leading-[1.1] font-display text-transparent pointer-events-none select-none"
                 style={{
-                  WebkitTextStroke: "1.5px #F72798",
-                  transform: "translate(10px, -10px)",
+                  WebkitTextStroke: "var(--neon-stroke-width) #F72798",
+                  transform: "translate(var(--neon-offset-sm), calc(var(--neon-offset-sm) * -1))",
                   opacity: 0.6,
                 }}
               >
@@ -40,10 +40,10 @@ export function Hero() {
 
               {/* Cyan Offset Layer */}
               <span
-                className="absolute inset-0 z-0 text-[25vw] md:text-[35vw] leading-[1.1] font-display text-transparent pointer-events-none select-none"
+                className="absolute inset-0 z-0 text-[38vw] md:text-[35vw] leading-[1.1] font-display text-transparent pointer-events-none select-none"
                 style={{
-                  WebkitTextStroke: "1.5px #00FFFF",
-                  transform: "translate(-10px, 10px)",
+                  WebkitTextStroke: "var(--neon-stroke-width) #00FFFF",
+                  transform: "translate(calc(var(--neon-offset-sm) * -1), var(--neon-offset-sm))",
                   opacity: 0.6,
                 }}
               >
@@ -52,10 +52,10 @@ export function Hero() {
 
               {/* Yellow Offset Layer */}
               <span
-                className="absolute inset-0 z-0 text-[25vw] md:text-[35vw] leading-[1.1] font-display text-transparent pointer-events-none select-none"
+                className="absolute inset-0 z-0 text-[38vw] md:text-[35vw] leading-[1.1] font-display text-transparent pointer-events-none select-none"
                 style={{
-                  WebkitTextStroke: "1.5px #EBF400",
-                  transform: "translate(-20px, 20px)",
+                  WebkitTextStroke: "var(--neon-stroke-width) #EBF400",
+                  transform: "translate(calc(var(--neon-offset-lg) * -1), var(--neon-offset-lg))",
                   opacity: 0.6,
                 }}
               >
@@ -64,7 +64,7 @@ export function Hero() {
 
               {/* Main Character with Image Mask */}
               <span
-                className="relative z-10 block text-[25vw] md:text-[35vw] leading-[1.1] font-display text-transparent bg-clip-text bg-cover bg-center"
+                className="relative z-10 block text-[38vw] md:text-[35vw] leading-[1.1] font-display text-transparent bg-clip-text bg-cover bg-center"
                 style={{
                   backgroundImage: "url('/hero-mask1.jpg')",
                   transform: "scale(1)",
@@ -81,18 +81,18 @@ export function Hero() {
       </div>
 
       {/* Bottom Section - Capabilities & CTA */}
-      <div className="absolute bottom-0 left-0 right-0 p-6 md:p-12 flex flex-col md:flex-row justify-between items-end z-20 gap-8">
+      <div className="absolute bottom-0 left-0 right-0 px-4 pb-4 md:p-12 flex flex-col md:flex-row justify-between items-end z-20 gap-4 md:gap-8">
         
         {/* Left: Capabilities Tags */}
-        <div className="flex flex-col gap-4 w-full max-w-md">
-          <h3 className="text-neon-yellow  font-display text-3xl uppercase tracking-widest mb-2">
+        <div className="flex flex-col gap-2 md:gap-4 w-full max-w-md">
+          <h3 className="text-neon-yellow font-display text-xl md:text-3xl uppercase tracking-widest mb-2">
             Capabilities
           </h3>
-          <div className="flex flex-wrap gap-3 ">
+          <div className="flex flex-wrap gap-2 md:gap-3 ">
             {['Stealth Addresses', 'ZK Compression', 'Blinks', 'Zero Knowledge'].map((service) => (
               <span
                 key={service}
-                className="px-6 py-2 bg-white/5 border border-white/10 rounded-full text-2xl text-zinc-300 font-display hover:bg-white/10 transition-colors cursor-default backdrop-blur-md"
+                className="px-4 py-1.5 md:px-6 md:py-2 bg-white/5 border border-white/10 rounded-full text-sm md:text-2xl text-zinc-300 font-display hover:bg-white/10 transition-colors cursor-default backdrop-blur-md"
               >
                 {service}
               </span>

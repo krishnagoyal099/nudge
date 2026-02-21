@@ -9,9 +9,14 @@
   --neon-yellow: #EBF400;
 
   /* Hero Text Scaling for consistent wallpaper alignment */
-  --hero-text-size: 25vw;
+  --hero-text-size: 38vw;
   --hero-line-height: 1.1;
   --hero-text-height: calc(var(--hero-text-size) * var(--hero-line-height));
+
+  /* Neon offset translations - smaller on mobile */
+  --neon-offset-sm: 4px;
+  --neon-offset-lg: 8px;
+  --neon-stroke-width: 0.8px;
   
   /* Fallback to display font for hero headings if not explicitly set */
   --font-heading-main: var(--font-display);
@@ -20,6 +25,9 @@
 @media (min-width: 768px) {
   :root {
     --hero-text-size: 35vw;
+    --neon-offset-sm: 10px;
+    --neon-offset-lg: 20px;
+    --neon-stroke-width: 1.5px;
   }
 }
 
